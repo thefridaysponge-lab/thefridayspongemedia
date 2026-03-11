@@ -12,11 +12,7 @@
       --navy: #1C2340;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html {
-      height: 100%;
-    }
-
+    html { height: 100%; }
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--navy);
@@ -33,8 +29,6 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
-
-    /* Gold border */
     body::before {
       content: '';
       position: fixed; inset: 8px;
@@ -43,8 +37,6 @@
       pointer-events: none;
       z-index: 100;
     }
-
-    /* Glow */
     .bg-glow {
       position: fixed;
       width: 600px; height: 600px;
@@ -54,31 +46,22 @@
       pointer-events: none;
       animation: pulse 5s ease-in-out infinite;
     }
-
-    /* Particles */
     .particles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
     .particle {
       position: absolute; background: var(--gold); border-radius: 50%;
       opacity: 0; animation: floatUp linear infinite;
     }
-
-    /* All content sits above bg */
     .content {
       position: relative; z-index: 1;
       display: flex; flex-direction: column;
       align-items: center; width: 100%;
       max-width: 700px;
-      gap: 0;
     }
-
-    /* Logo */
     .logo-img {
       width: 90px; height: 90px; border-radius: 50%;
       object-fit: cover; margin-bottom: 1.2rem;
       animation: fadeUp 0.6s ease 0.1s both;
     }
-
-    /* Star row */
     .star-row {
       display: flex; align-items: center; gap: 0.6rem;
       margin-bottom: 1rem;
@@ -90,8 +73,6 @@
     }
     .star { color: var(--gold); font-size: 0.7rem; }
     .line { width: 32px; height: 1px; background: var(--gold); opacity: 0.45; }
-
-    /* Heading */
     h1 {
       font-family: 'Playfair Display', serif;
       font-weight: 900;
@@ -102,8 +83,6 @@
       animation: fadeUp 0.6s ease 0.3s both;
     }
     h1 .gold { color: var(--gold); display: block; }
-
-    /* Tagline */
     .tagline {
       font-size: clamp(0.8rem, 2vw, 0.95rem);
       color: rgba(255,255,255,0.5);
@@ -114,8 +93,6 @@
       animation: fadeUp 0.6s ease 0.35s both;
     }
     .tagline strong { color: white; font-weight: 500; }
-
-    /* Countdown */
     .countdown {
       display: flex; align-items: flex-start;
       gap: 0.6rem; flex-wrap: wrap; justify-content: center;
@@ -146,7 +123,7 @@
       padding-bottom: 1.4rem; align-self: flex-start; margin-top: 0.5rem;
     }
 
-    /* Email */
+    /* Substack form */
     .notify-label {
       font-size: 0.78rem; color: rgba(255,255,255,0.32);
       margin-bottom: 0.65rem; letter-spacing: 0.03em;
@@ -175,14 +152,12 @@
       letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
     }
     .email-form button:hover { background: var(--gold-light); color: var(--navy); }
-
     .form-note {
       font-size: 0.68rem; color: rgba(255,255,255,0.18);
       margin-top: 0.55rem; margin-bottom: 1.5rem;
       animation: fadeUp 0.6s ease 0.6s both;
     }
 
-    /* Socials */
     .socials {
       display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
       animation: fadeUp 0.6s ease 0.65s both;
@@ -196,15 +171,11 @@
       transition: all 0.2s;
     }
     .social-btn:hover { color: var(--gold); border-color: rgba(201,152,26,0.4); background: rgba(201,152,26,0.05); }
-
-    /* Footer */
     .footer-txt {
       font-size: 0.68rem; color: rgba(255,255,255,0.15);
       margin-top: 1.5rem; letter-spacing: 0.05em;
       animation: fadeUp 0.6s ease 0.7s both;
     }
-
-    /* Launched */
     .launched-wrap { display: none; flex-direction: column; align-items: center; gap: 1rem; }
     .launched-wrap p { font-size: 0.95rem; color: rgba(255,255,255,0.5); }
     .launched-wrap a {
@@ -214,7 +185,6 @@
     }
     .launched-wrap a:hover { background: var(--gold-light); color: var(--navy); }
 
-    /* Animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -275,7 +245,9 @@
     </div>
 
     <p class="notify-label">Get notified the moment we launch</p>
-    <form class="email-form" onsubmit="handleSubscribe(event)">
+
+    <!-- Substack embedded subscribe form -->
+    <form class="email-form" id="substack-form" onsubmit="handleSubscribe(event)">
       <input type="email" id="email-input" placeholder="Enter your email" required />
       <button type="submit">Follow Along</button>
     </form>
@@ -284,7 +256,7 @@
     <div class="socials">
       <a href="https://youtube.com/@thefridaysponge" target="_blank" class="social-btn">▶ YouTube</a>
       <a href="https://instagram.com/thefridaysponge" target="_blank" class="social-btn">◈ Instagram</a>
-      <a href="#" target="_blank" class="social-btn">🎙 Podcast</a>
+      <a href="https://thefridaysponge.substack.com" target="_blank" class="social-btn">✉ Newsletter</a>
     </div>
 
     <div class="launched-wrap" id="launched-wrap">
@@ -338,13 +310,21 @@
     update();
     setInterval(update, 1000);
 
+    // Substack form submission
     function handleSubscribe(e) {
       e.preventDefault();
+      const email = document.getElementById('email-input').value;
       const btn = e.target.querySelector('button');
-      btn.textContent = "✓ You're In!";
+
+      // Open Substack subscribe page with email pre-filled
+      const substackUrl = `https://thefridaysponge.substack.com/subscribe?email=${encodeURIComponent(email)}`;
+      window.open(substackUrl, '_blank');
+
+      // Show confirmation
+      btn.textContent = "✓ Check Your Email!";
       btn.style.background = '#2a7d4f';
       document.getElementById('email-input').value = '';
-      setTimeout(() => { btn.textContent = 'Follow Along'; btn.style.background = ''; }, 3000);
+      setTimeout(() => { btn.textContent = 'Follow Along'; btn.style.background = ''; }, 4000);
     }
   </script>
 
