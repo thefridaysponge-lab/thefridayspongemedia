@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Friday Sponge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #C9981A;
+      --gold-light: #E8B92A;
+      --navy: #1C2340;
+      --cream: #F5F0E8;
+      --cream-dark: #EDE8DF;
+      --muted: #6B6957;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      position: sticky; top: 0;
+      background: var(--cream); z-index: 100;
+      border-bottom: 1px solid rgba(28,35,64,0.08);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .logo-badge {
+      width: 34px; height: 34px; background: var(--gold); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-weight: 900; color: white; font-size: 1rem;
+    }
+    .logo-text { font-weight: 500; font-size: 0.97rem; color: var(--navy); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--navy); font-size: 0.88rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: white !important; padding: 0.45rem 1.2rem;
+      border-radius: 6px; font-weight: 500 !important; transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 88vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 5rem 2rem 3rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(201,152,26,0.11) 0%, transparent 68%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--cream-dark); border: 1px solid rgba(201,152,26,0.3);
+      border-radius: 100px; padding: 0.38rem 1rem;
+      font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem;
+      animation: fadeDown 0.6s ease forwards;
+    }
+    .hero-badge .star { color: var(--gold); }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.4rem);
+      font-weight: 900; line-height: 1.04;
+      max-width: 880px; margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero p {
+      font-size: 1.05rem; color: var(--muted); max-width: 540px;
+      line-height: 1.75; margin-bottom: 2.5rem; font-weight: 300;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+    .hero-buttons {
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+    .btn-primary {
+      background: var(--gold); color: white; padding: 0.82rem 2rem;
+      border-radius: 8px; font-size: 0.93rem; font-weight: 500;
+      text-decoration: none; transition: all 0.2s; border: 2px solid var(--gold);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light); border-color: var(--gold-light);
+      color: var(--navy); transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--navy); padding: 0.82rem 2rem;
+      border-radius: 8px; font-size: 0.93rem; font-weight: 500;
+      text-decoration: none; border: 2px solid var(--navy); transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: var(--navy); color: var(--cream); transform: translateY(-2px); }
+    .scroll-hint {
+      margin-top: 3.5rem; display: flex; flex-direction: column;
+      align-items: center; gap: 0.4rem; color: var(--muted); font-size: 0.78rem;
+      animation: fadeUp 0.7s ease 0.5s both;
+    }
+    .scroll-arrow {
+      width: 18px; height: 18px;
+      border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg); animation: bounce 1.6s ease-in-out infinite;
+    }
+
+    /* SHARED */
+    .section-label {
+      font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500; margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 4vw, 2.9rem); font-weight: 700; margin-bottom: 0.8rem;
+    }
+    .section-sub { color: var(--muted); font-size: 0.98rem; font-weight: 300; line-height: 1.65; }
+
+    /* PLATFORMS */
+    .platforms { padding: 5.5rem 3rem; max-width: 1100px; margin: 0 auto; }
+    .platforms .section-label,
+    .platforms .section-title,
+    .platforms .section-sub { text-align: center; }
+    .platforms .section-sub { max-width: 480px; margin: 0 auto 3rem; }
+
+    .platform-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.4rem; }
+
+    .platform-card {
+      background: white; border-radius: 16px; padding: 1.8rem;
+      text-decoration: none; color: var(--navy);
+      border: 1px solid rgba(28,35,64,0.07);
+      transition: all 0.25s; display: flex; flex-direction: column; gap: 0.7rem;
+      position: relative; overflow: hidden;
+    }
+    .platform-card::after {
+      content: '→'; position: absolute; bottom: 1.4rem; right: 1.6rem;
+      font-size: 1rem; color: var(--gold); opacity: 0;
+      transform: translateX(-8px); transition: all 0.25s;
+    }
+    .platform-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 44px rgba(28,35,64,0.09);
+      border-color: rgba(201,152,26,0.35);
+    }
+    .platform-card:hover::after { opacity: 1; transform: translateX(0); }
+    .platform-icon {
+      width: 46px; height: 46px; border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 0.3rem;
+    }
+    .icon-yt   { background: rgba(255,0,0,0.07); }
+    .icon-pod  { background: rgba(147,51,234,0.07); }
+    .icon-ig   { background: rgba(201,152,26,0.1); }
+    .icon-news { background: rgba(28,35,64,0.06); }
+    .platform-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; }
+    .platform-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+    .platform-tag {
+      display: inline-block; font-size: 0.73rem; font-weight: 500;
+      color: var(--gold); background: rgba(201,152,26,0.1);
+      padding: 0.18rem 0.55rem; border-radius: 100px; margin-top: auto;
+    }
+
+    /* NEWSLETTER */
+    .newsletter-section {
+      background: var(--navy); padding: 5.5rem 3rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .newsletter-section::before {
+      content: ''; position: absolute; width: 550px; height: 550px;
+      background: radial-gradient(circle, rgba(201,152,26,0.13) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
+    }
+    .newsletter-section .section-label { color: var(--gold); }
+    .newsletter-section .section-title { color: white; }
+    .newsletter-section .section-sub { color: rgba(255,255,255,0.55); max-width: 460px; margin: 0 auto 2.5rem; }
+    .email-form {
+      display: flex; gap: 0.7rem; max-width: 460px; margin: 0 auto;
+      flex-wrap: wrap; justify-content: center; position: relative; z-index: 1;
+    }
+    .email-form input {
+      flex: 1; min-width: 210px; padding: 0.88rem 1.2rem; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.07);
+      color: white; font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
+      outline: none; transition: border 0.2s;
+    }
+    .email-form input::placeholder { color: rgba(255,255,255,0.35); }
+    .email-form input:focus { border-color: var(--gold); }
+    .email-form button {
+      background: var(--gold); color: white; border: none;
+      padding: 0.88rem 1.8rem; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
+      font-weight: 500; cursor: pointer; transition: all 0.2s;
+    }
+    .email-form button:hover { background: var(--gold-light); color: var(--navy); }
+    .form-note { color: rgba(255,255,255,0.3); font-size: 0.76rem; margin-top: 0.9rem; }
+
+    /* ABOUT */
+    .about-section {
+      padding: 6rem 3rem; max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .about-left .section-label,
+    .about-left .section-title { text-align: left; }
+    .about-text { color: var(--muted); font-size: 0.97rem; line-height: 1.8; font-weight: 300; margin-bottom: 1rem; }
+    .about-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 900; color: var(--gold); line-height: 1; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+    .about-right { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .val-card {
+      background: var(--cream-dark); border-radius: 14px; padding: 1.5rem;
+      border: 1px solid rgba(28,35,64,0.06);
+    }
+    .val-card .card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(201,152,26,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; margin-bottom: 0.8rem;
+    }
+    .val-card h4 { font-family: 'Playfair Display', serif; font-size: 0.97rem; font-weight: 700; margin-bottom: 0.45rem; }
+    .val-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* FOOTER */
+    footer {
+      background: var(--cream-dark); border-top: 1px solid rgba(28,35,64,0.07);
+      padding: 2.5rem 3rem; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 0.6rem; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { text-decoration: none; color: var(--muted); font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.8rem; color: var(--muted); }
+
+    /* ANIMATIONS */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%,100% { transform: rotate(45deg) translateY(0); }
+      50%      { transform: rotate(45deg) translateY(6px); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .platforms { padding: 3.5rem 1.5rem; }
+      .newsletter-section { padding: 4rem 1.5rem; }
+      .about-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 1.5rem; }
+      footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .about-right { grid-template-columns: 1fr; }
+      .about-stats { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="logo-badge">F</div>
+      <span class="logo-text">The Friday Sponge</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#platforms">Platforms</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#newsletter" class="nav-cta">Subscribe</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge"><span class="star">✦</span> Inspiring the Next Generation</div>
+    <h1>Stories of <em>Freedom Builders</em></h1>
+    <p>Real conversations with people who've built careers on their own terms. Weekly inspiration for designing a life of purpose, creativity, and freedom.</p>
+    <div class="hero-buttons">
+      <a href="#newsletter" class="btn-primary">Join the Community</a>
+      <a href="https://youtube.com/@thefridaysponge" target="_blank" class="btn-secondary">Watch Videos</a>
+    </div>
+    <div class="scroll-hint">
+      <span>Explore</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- PLATFORMS -->
+  <section class="platforms" id="platforms">
+    <p class="section-label">Find Us Everywhere</p>
+    <h2 class="section-title">All Your Favourite Platforms</h2>
+    <p class="section-sub">Whether you watch, listen, scroll, or read — we're wherever you are every Friday.</p>
+
+    <div class="platform-grid">
+      <a href="https://youtube.com/@thefridaysponge" target="_blank" class="platform-card">
+        <div class="platform-icon icon-yt">▶️</div>
+        <h3>YouTube</h3>
+        <p>Long-form interviews and deep dives with freedom builders sharing their real stories.</p>
+        <span class="platform-tag">Watch</span>
+      </a>
+      <a href="#" target="_blank" class="platform-card">
+        <div class="platform-icon icon-pod">🎙️</div>
+        <h3>Podcast</h3>
+        <p>Take the conversations with you. Available on Spotify, Apple Podcasts & everywhere you listen.</p>
+        <span class="platform-tag">Listen</span>
+      </a>
+      <a href="https://instagram.com/thefridaysponge" target="_blank" class="platform-card">
+        <div class="platform-icon icon-ig">📱</div>
+        <h3>Instagram & TikTok</h3>
+        <p>Bite-sized insights, clips, and behind-the-scenes moments — made for your scroll.</p>
+        <span class="platform-tag">Follow</span>
+      </a>
+      <a href="#newsletter" class="platform-card">
+        <div class="platform-icon icon-news">✉️</div>
+        <h3>Newsletter</h3>
+        <p>Every Friday, one story of a freedom builder delivered straight to your inbox.</p>
+        <span class="platform-tag">Subscribe</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section" id="newsletter">
+    <p class="section-label">Newsletter</p>
+    <h2 class="section-title">Get Weekly Inspiration</h2>
+    <p class="section-sub">Join thousands of readers getting stories of freedom builders delivered to their inbox every Friday.</p>
+    <form class="email-form" onsubmit="handleSubscribe(event)">
+      <input type="email" id="email-input" placeholder="Enter your email" required />
+      <button type="submit">Subscribe →</button>
+    </form>
+    <p class="form-note">Free forever. Unsubscribe anytime.</p>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-left">
+      <p class="section-label">About Us</p>
+      <h2 class="section-title">What is The Friday Sponge?</h2>
+      <p class="about-text">The Friday Sponge is a media brand dedicated to inspiring the next generation of freedom builders — people who design their careers and lives on their own terms.</p>
+      <p class="about-text">Through our weekly newsletter, long-form YouTube videos, and bite-sized social content, we share the stories, strategies, and mindsets of people who've escaped the traditional path to build something meaningful.</p>
+      <p class="about-text">Whether you're a creator, entrepreneur, freelancer, or simply someone dreaming of a different way of working, The Friday Sponge is your weekly dose of inspiration and practical wisdom.</p>
+      <div class="about-stats">
+        <div><div class="stat-num">5K+</div><div class="stat-label">Subscribers</div></div>
+        <div><div class="stat-num">50+</div><div class="stat-label">Episodes</div></div>
+        <div><div class="stat-num">100K+</div><div class="stat-label">Views</div></div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="val-card">
+        <div class="card-icon">💡</div>
+        <h4>Creativity First</h4>
+        <p>We believe everyone has the power to create something meaningful. Our stories highlight those who've turned ideas into reality.</p>
+      </div>
+      <div class="val-card">
+        <div class="card-icon">🤝</div>
+        <h4>Real Conversations</h4>
+        <p>No fluff, no hype. Just honest discussions about what it really takes to build a career on your own terms.</p>
+      </div>
+      <div class="val-card">
+        <div class="card-icon">⚡</div>
+        <h4>Actionable Insights</h4>
+        <p>Every piece of content is designed to leave you with something you can apply to your own journey today.</p>
+      </div>
+      <div class="val-card">
+        <div class="card-icon">❤️</div>
+        <h4>Community Driven</h4>
+        <p>We're building more than an audience — we're creating a community of freedom builders supporting each other.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <div class="logo-badge">F</div>
+      <span class="logo-text">The Friday Sponge</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#platforms">Platforms</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="https://youtube.com/@thefridaysponge" target="_blank">YouTube</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 The Friday Sponge. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function handleSubscribe(e) {
+      e.preventDefault();
+      const input = document.getElementById('email-input');
+      const btn = e.target.querySelector('button');
+      btn.textContent = "✓ You're in!";
+      btn.style.background = '#2a7d4f';
+      input.value = '';
+      setTimeout(() => { btn.textContent = 'Subscribe →'; btn.style.background = ''; }, 3000);
+    }
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.platform-card, .val-card').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(22px)';
+      el.style.transition = `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`;
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
