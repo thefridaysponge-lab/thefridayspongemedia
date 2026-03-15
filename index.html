@@ -6,56 +6,35 @@
   <title>The Friday Sponge — Coming Soon</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --gold: #C9981A;
-      --gold-light: #E8B92A;
-      --navy: #1C2340;
-    }
+    :root { --gold: #C9981A; --gold-light: #E8B92A; --navy: #1C2340; }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { height: 100%; }
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--navy);
-      color: white;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2.5rem 1.5rem;
-      position: relative;
-      overflow-x: hidden;
-      overflow-y: auto;
+      background: var(--navy); color: white;
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 2.5rem 1.5rem;
+      position: relative; overflow-x: hidden; overflow-y: auto;
     }
     body::before {
-      content: '';
-      position: fixed; inset: 8px;
-      border: 2px solid rgba(201,152,26,0.4);
-      border-radius: 4px;
-      pointer-events: none;
-      z-index: 100;
+      content: ''; position: fixed; inset: 8px;
+      border: 2px solid rgba(201,152,26,0.4); border-radius: 4px;
+      pointer-events: none; z-index: 100;
     }
     .bg-glow {
-      position: fixed;
-      width: 600px; height: 600px;
+      position: fixed; width: 600px; height: 600px;
       background: radial-gradient(circle, rgba(201,152,26,0.1) 0%, transparent 65%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      animation: pulse 5s ease-in-out infinite;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none; animation: pulse 5s ease-in-out infinite;
     }
     .particles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
-    .particle {
-      position: absolute; background: var(--gold); border-radius: 50%;
-      opacity: 0; animation: floatUp linear infinite;
-    }
+    .particle { position: absolute; background: var(--gold); border-radius: 50%; opacity: 0; animation: floatUp linear infinite; }
     .content {
       position: relative; z-index: 1;
       display: flex; flex-direction: column;
-      align-items: center; width: 100%;
-      max-width: 700px;
+      align-items: center; width: 100%; max-width: 700px;
     }
     .logo-img {
       width: 90px; height: 90px; border-radius: 50%;
@@ -64,81 +43,47 @@
     }
     .star-row {
       display: flex; align-items: center; gap: 0.6rem;
-      margin-bottom: 1rem;
-      animation: fadeUp 0.6s ease 0.2s both;
+      margin-bottom: 1rem; animation: fadeUp 0.6s ease 0.2s both;
     }
-    .star-row span {
-      font-size: 0.65rem; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--gold); font-weight: 500;
-    }
-    .star { color: var(--gold); font-size: 0.7rem; }
+    .star-row span { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
     .line { width: 32px; height: 1px; background: var(--gold); opacity: 0.45; }
     h1 {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: clamp(2rem, 8vw, 4.2rem);
-      line-height: 1.0;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: clamp(2rem, 8vw, 4.2rem); line-height: 1.0;
+      text-transform: uppercase; margin-bottom: 1rem;
       animation: fadeUp 0.6s ease 0.3s both;
     }
     h1 .gold { color: var(--gold); display: block; }
     .tagline {
-      font-size: clamp(0.8rem, 2vw, 0.95rem);
-      color: rgba(255,255,255,0.5);
-      font-weight: 300;
-      line-height: 1.7;
-      max-width: 420px;
-      margin-bottom: 1.8rem;
-      animation: fadeUp 0.6s ease 0.35s both;
+      font-size: clamp(0.8rem, 2vw, 0.95rem); color: rgba(255,255,255,0.5);
+      font-weight: 300; line-height: 1.7; max-width: 420px;
+      margin-bottom: 1.8rem; animation: fadeUp 0.6s ease 0.35s both;
     }
     .tagline strong { color: white; font-weight: 500; }
     .countdown {
       display: flex; align-items: flex-start;
       gap: 0.6rem; flex-wrap: wrap; justify-content: center;
-      margin-bottom: 1.8rem;
-      animation: fadeUp 0.6s ease 0.4s both;
+      margin-bottom: 1.8rem; animation: fadeUp 0.6s ease 0.4s both;
     }
     .count-block { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
     .count-num {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: clamp(1.6rem, 5vw, 2.6rem);
-      line-height: 1;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 0.5rem 0.75rem;
-      min-width: 70px;
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: clamp(1.6rem, 5vw, 2.6rem); line-height: 1;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 0.5rem 0.75rem; min-width: 70px;
       transition: color 0.25s, border-color 0.25s;
     }
     .count-num.tick { color: var(--gold); border-color: rgba(201,152,26,0.35); }
-    .count-label {
-      font-size: 0.62rem; color: rgba(255,255,255,0.28);
-      letter-spacing: 0.1em; text-transform: uppercase;
-    }
-    .sep {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem; color: var(--gold); opacity: 0.3;
-      padding-bottom: 1.4rem; align-self: flex-start; margin-top: 0.5rem;
-    }
-
-    /* Substack form */
-    .notify-label {
-      font-size: 0.78rem; color: rgba(255,255,255,0.32);
-      margin-bottom: 0.65rem; letter-spacing: 0.03em;
-      animation: fadeUp 0.6s ease 0.5s both;
-    }
+    .count-label { font-size: 0.62rem; color: rgba(255,255,255,0.28); letter-spacing: 0.1em; text-transform: uppercase; }
+    .sep { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold); opacity: 0.3; padding-bottom: 1.4rem; align-self: flex-start; margin-top: 0.5rem; }
+    .notify-label { font-size: 0.78rem; color: rgba(255,255,255,0.32); margin-bottom: 0.65rem; letter-spacing: 0.03em; animation: fadeUp 0.6s ease 0.5s both; }
     .email-form {
       display: flex; gap: 0.55rem; flex-wrap: wrap; justify-content: center;
-      width: 100%; max-width: 460px;
-      animation: fadeUp 0.6s ease 0.55s both;
+      width: 100%; max-width: 460px; animation: fadeUp 0.6s ease 0.55s both;
     }
     .email-form input {
-      flex: 1; min-width: 180px;
-      padding: 0.72rem 1.1rem; border-radius: 7px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.07);
+      flex: 1; min-width: 180px; padding: 0.72rem 1.1rem; border-radius: 7px;
+      border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.07);
       color: white; font-family: 'DM Sans', sans-serif; font-size: 0.87rem;
       outline: none; transition: border 0.2s;
     }
@@ -152,53 +97,33 @@
       letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
     }
     .email-form button:hover { background: var(--gold-light); color: var(--navy); }
-    .form-note {
-      font-size: 0.68rem; color: rgba(255,255,255,0.18);
-      margin-top: 0.55rem; margin-bottom: 1.5rem;
-      animation: fadeUp 0.6s ease 0.6s both;
-    }
-
-    .socials {
-      display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
-      animation: fadeUp 0.6s ease 0.65s both;
-    }
+    .form-note { font-size: 0.68rem; color: rgba(255,255,255,0.18); margin-top: 0.55rem; margin-bottom: 1.5rem; animation: fadeUp 0.6s ease 0.6s both; }
+    .socials { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.6s ease 0.65s both; }
     .social-btn {
       display: flex; align-items: center; gap: 0.4rem;
       text-decoration: none; color: rgba(255,255,255,0.38);
-      font-size: 0.77rem; font-weight: 400;
-      padding: 0.45rem 0.85rem; border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.2s;
+      font-size: 0.77rem; padding: 0.45rem 0.85rem; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s;
     }
     .social-btn:hover { color: var(--gold); border-color: rgba(201,152,26,0.4); background: rgba(201,152,26,0.05); }
-    .footer-txt {
-      font-size: 0.68rem; color: rgba(255,255,255,0.15);
-      margin-top: 1.5rem; letter-spacing: 0.05em;
-      animation: fadeUp 0.6s ease 0.7s both;
-    }
+    .footer-txt { font-size: 0.68rem; color: rgba(255,255,255,0.15); margin-top: 1.5rem; letter-spacing: 0.05em; animation: fadeUp 0.6s ease 0.7s both; }
     .launched-wrap { display: none; flex-direction: column; align-items: center; gap: 1rem; }
     .launched-wrap p { font-size: 0.95rem; color: rgba(255,255,255,0.5); }
-    .launched-wrap a {
-      background: var(--gold); color: white; padding: 0.85rem 2rem;
-      border-radius: 8px; font-size: 0.92rem; font-weight: 500;
-      text-decoration: none; transition: all 0.2s;
-    }
+    .launched-wrap a { background: var(--gold); color: white; padding: 0.85rem 2rem; border-radius: 8px; font-size: 0.92rem; font-weight: 500; text-decoration: none; transition: all 0.2s; }
     .launched-wrap a:hover { background: var(--gold-light); color: var(--navy); }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* Success message */
+    .success-msg {
+      display: none; align-items: center; gap: 0.5rem;
+      background: rgba(42,125,79,0.2); border: 1px solid rgba(42,125,79,0.4);
+      border-radius: 8px; padding: 0.7rem 1.2rem;
+      font-size: 0.85rem; color: #6fcf97; margin-top: 0.6rem;
+      animation: fadeUp 0.4s ease both;
     }
-    @keyframes pulse {
-      0%,100% { transform: translate(-50%,-50%) scale(1); }
-      50%      { transform: translate(-50%,-50%) scale(1.1); }
-    }
-    @keyframes floatUp {
-      0%   { opacity: 0; transform: translateY(100vh); }
-      10%  { opacity: 0.4; }
-      90%  { opacity: 0.15; }
-      100% { opacity: 0; transform: translateY(-5vh); }
-    }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.1); } }
+    @keyframes floatUp { 0% { opacity: 0; transform: translateY(100vh); } 10% { opacity: 0.4; } 90% { opacity: 0.15; } 100% { opacity: 0; transform: translateY(-5vh); } }
   </style>
 </head>
 <body>
@@ -212,9 +137,9 @@
 
     <div class="star-row">
       <div class="line"></div>
-      <span class="star">★</span>
+      <span>★</span>
       <span>New Clips Dropping Soon</span>
-      <span class="star">★</span>
+      <span>★</span>
       <div class="line"></div>
     </div>
 
@@ -223,35 +148,23 @@
     <p class="tagline">Every week we sit down with the people <strong>building this community</strong> — and bring their stories straight to you. Launching <strong>March 20th.</strong></p>
 
     <div class="countdown" id="countdown">
-      <div class="count-block">
-        <div class="count-num" id="days">00</div>
-        <div class="count-label">Days</div>
-      </div>
+      <div class="count-block"><div class="count-num" id="days">00</div><div class="count-label">Days</div></div>
       <div class="sep">:</div>
-      <div class="count-block">
-        <div class="count-num" id="hours">00</div>
-        <div class="count-label">Hours</div>
-      </div>
+      <div class="count-block"><div class="count-num" id="hours">00</div><div class="count-label">Hours</div></div>
       <div class="sep">:</div>
-      <div class="count-block">
-        <div class="count-num" id="minutes">00</div>
-        <div class="count-label">Minutes</div>
-      </div>
+      <div class="count-block"><div class="count-num" id="minutes">00</div><div class="count-label">Minutes</div></div>
       <div class="sep">:</div>
-      <div class="count-block">
-        <div class="count-num" id="seconds">00</div>
-        <div class="count-label">Seconds</div>
-      </div>
+      <div class="count-block"><div class="count-num" id="seconds">00</div><div class="count-label">Seconds</div></div>
     </div>
 
-    <p class="notify-label">Get notified the moment we launch</p>
+    <p class="notify-label" id="notify-label">Get notified the moment we launch</p>
 
-    <!-- Substack embedded subscribe form -->
-    <form class="email-form" id="substack-form" onsubmit="handleSubscribe(event)">
+    <form class="email-form" id="subscribe-form" onsubmit="handleSubscribe(event)">
       <input type="email" id="email-input" placeholder="Enter your email" required />
-      <button type="submit">Follow Along</button>
+      <button type="submit" id="submit-btn">Follow Along</button>
     </form>
     <p class="form-note" id="form-note">Free forever · Unsubscribe anytime</p>
+    <div class="success-msg" id="success-msg">✓ You're on the list! Check your inbox to confirm.</div>
 
     <div class="socials">
       <a href="https://youtube.com/@thefridaysponge" target="_blank" class="social-btn">▶ YouTube</a>
@@ -295,8 +208,8 @@
       const diff = LAUNCH - new Date();
       if (diff <= 0) {
         document.getElementById('countdown').style.display = 'none';
-        document.querySelector('.notify-label').style.display = 'none';
-        document.querySelector('.email-form').style.display = 'none';
+        document.getElementById('notify-label').style.display = 'none';
+        document.getElementById('subscribe-form').style.display = 'none';
         document.getElementById('form-note').style.display = 'none';
         document.getElementById('launched-wrap').style.display = 'flex';
         return;
@@ -310,21 +223,43 @@
     update();
     setInterval(update, 1000);
 
-    // Substack form submission
+    // Beehiiv Magic Link subscription
     function handleSubscribe(e) {
       e.preventDefault();
-      const email = document.getElementById('email-input').value;
-      const btn = e.target.querySelector('button');
+      const email = document.getElementById('email-input').value.trim();
+      const btn = document.getElementById('submit-btn');
 
-      // Open Substack subscribe page with email pre-filled
-      const substackUrl = `https://thefridaysponge.substack.com/subscribe?email=${encodeURIComponent(email)}`;
-      window.open(substackUrl, '_blank');
+      if (!email) return;
 
-      // Show confirmation
-      btn.textContent = "✓ Check Your Email!";
-      btn.style.background = '#2a7d4f';
+      // Disable button while processing
+      btn.textContent = 'Subscribing...';
+      btn.disabled = true;
+
+      // Build Beehiiv magic link with email injected
+      const beehiivBase = 'https://magic.beehiiv.com/v1/4f47917d-d287-473a-92da-df9d1532d4ce';
+      const magicLink = `${beehiivBase}?email=${encodeURIComponent(email)}&utm_source=launch_page&utm_medium=website`;
+
+      // Open in background — subscriber gets added to Beehiiv silently
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = magicLink;
+      document.body.appendChild(iframe);
+
+      // Clean up after 5s
+      setTimeout(() => { if (iframe.parentNode) iframe.parentNode.removeChild(iframe); }, 5000);
+
+      // Show success
       document.getElementById('email-input').value = '';
-      setTimeout(() => { btn.textContent = 'Follow Along'; btn.style.background = ''; }, 4000);
+      document.getElementById('form-note').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'flex';
+      btn.textContent = '✓ You\'re In!';
+      btn.style.background = '#2a7d4f';
+
+      setTimeout(() => {
+        btn.textContent = 'Follow Along';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 4000);
     }
   </script>
 
