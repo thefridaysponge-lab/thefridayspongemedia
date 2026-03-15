@@ -112,15 +112,6 @@
     .launched-wrap a { background: var(--gold); color: white; padding: 0.85rem 2rem; border-radius: 8px; font-size: 0.92rem; font-weight: 500; text-decoration: none; transition: all 0.2s; }
     .launched-wrap a:hover { background: var(--gold-light); color: var(--navy); }
 
-    /* Success message */
-    .success-msg {
-      display: none; align-items: center; gap: 0.5rem;
-      background: rgba(42,125,79,0.2); border: 1px solid rgba(42,125,79,0.4);
-      border-radius: 8px; padding: 0.7rem 1.2rem;
-      font-size: 0.85rem; color: #6fcf97; margin-top: 0.6rem;
-      animation: fadeUp 0.4s ease both;
-    }
-
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.1); } }
     @keyframes floatUp { 0% { opacity: 0; transform: translateY(100vh); } 10% { opacity: 0.4; } 90% { opacity: 0.15; } 100% { opacity: 0; transform: translateY(-5vh); } }
@@ -163,8 +154,7 @@
       <input type="email" id="email-input" placeholder="Enter your email" required />
       <button type="submit" id="submit-btn">Follow Along</button>
     </form>
-    <p class="form-note" id="form-note">Free forever · Unsubscribe anytime</p>
-    <div class="success-msg" id="success-msg">✓ You're on the list! Check your inbox to confirm.</div>
+    <p class="form-note">Free forever · Unsubscribe anytime</p>
 
     <div class="socials">
       <a href="https://youtube.com/@thefridaysponge" target="_blank" class="social-btn">▶ YouTube</a>
@@ -194,7 +184,6 @@
     // Countdown
     const LAUNCH = new Date('2026-03-20T00:00:00');
     const pad = n => String(n).padStart(2,'0');
-
     function tickEl(id, val) {
       const el = document.getElementById(id);
       if (el.textContent !== val) {
@@ -203,14 +192,12 @@
         setTimeout(() => el.classList.remove('tick'), 280);
       }
     }
-
     function update() {
       const diff = LAUNCH - new Date();
       if (diff <= 0) {
         document.getElementById('countdown').style.display = 'none';
         document.getElementById('notify-label').style.display = 'none';
         document.getElementById('subscribe-form').style.display = 'none';
-        document.getElementById('form-note').style.display = 'none';
         document.getElementById('launched-wrap').style.display = 'flex';
         return;
       }
@@ -219,46 +206,27 @@
       tickEl('minutes', pad(Math.floor((diff % 3600000) / 60000)));
       tickEl('seconds', pad(Math.floor((diff % 60000) / 1000)));
     }
-
     update();
     setInterval(update, 1000);
 
-    // Beehiiv Magic Link subscription
+    // Beehiiv — opens magic link in new tab with email pre-filled
     function handleSubscribe(e) {
       e.preventDefault();
       const email = document.getElementById('email-input').value.trim();
       const btn = document.getElementById('submit-btn');
-
       if (!email) return;
 
-      // Disable button while processing
-      btn.textContent = 'Subscribing...';
-      btn.disabled = true;
+      const magicLink = `https://magic.beehiiv.com/v1/4f47917d-d287-473a-92da-df9d1532d4ce?email=${encodeURIComponent(email)}&utm_source=launch_page&utm_medium=website`;
+      window.open(magicLink, '_blank');
 
-      // Build Beehiiv magic link with email injected
-      const beehiivBase = 'https://magic.beehiiv.com/v1/4f47917d-d287-473a-92da-df9d1532d4ce';
-      const magicLink = `${beehiivBase}?email=${encodeURIComponent(email)}&utm_source=launch_page&utm_medium=website`;
-
-      // Open in background — subscriber gets added to Beehiiv silently
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = magicLink;
-      document.body.appendChild(iframe);
-
-      // Clean up after 5s
-      setTimeout(() => { if (iframe.parentNode) iframe.parentNode.removeChild(iframe); }, 5000);
-
-      // Show success
-      document.getElementById('email-input').value = '';
-      document.getElementById('form-note').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'flex';
-      btn.textContent = '✓ You\'re In!';
+      // Show confirmation on the page
+      btn.textContent = "✓ Check Your Inbox!";
       btn.style.background = '#2a7d4f';
+      document.getElementById('email-input').value = '';
 
       setTimeout(() => {
         btn.textContent = 'Follow Along';
         btn.style.background = '';
-        btn.disabled = false;
       }, 4000);
     }
   </script>
